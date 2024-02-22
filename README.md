@@ -7,10 +7,6 @@
 
 **Slides for the workshop**: [http://hol.pachot.net](http://hol.pachot.net)
 
-**Commands to copy-paste**: [lab-commands.sh](lab-commands.sh)
-
-
-
 **You can run it on Docker Desktop, or a free Gitpod VM (with github account)**:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FranckPachot/yb-hol/)
@@ -18,6 +14,8 @@
 **If you are currently following the workshop, my ports are exposed to:**
 
 [current-workshop-public-ports.md](current-workshop-public-ports.md)
+
+The commands to run are in the slide and in  [lab-commands.sh](lab-commands.sh)
 
 ---
 

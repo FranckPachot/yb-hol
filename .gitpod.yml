@@ -2,3 +2,8 @@ tasks:
   - init: |
       sudo apt-get update
       sudo apt-get install -y postgresql-client
+      docker pull yugabytedb/yugabyte:latest
+      docker pull postgres
+      docker pull prom/prometheus:latest
+      docker pull grafana/grafana-oss
+

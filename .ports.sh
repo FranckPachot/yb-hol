@@ -8,6 +8,6 @@ $2 ~  re && /private/ {
 $2 ~  re && /http/ {
     print " - ", $2, $5
 }
-' re=" (15433|700.|900.|9090|3000) " > public-ports.md
-git commit -m "public ports $(date)" public-ports.md
+' re=" (15433|700.|900.|9090|3000) " > current-workshop-public-ports.md
+git commit -m "public ports $(date)"   current-workshop-public-ports.md
 git push

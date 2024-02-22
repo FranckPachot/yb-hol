@@ -16,7 +16,7 @@
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FranckPachot/yb-hol/)
 
 **If you are currently following the workshop, my ports are exposed to:**
-listed in: [public-ports.md](public-ports.md)
+listed in: [current-workshop-public-ports.md](current-workshop-public-ports.md)
 
 ---
 

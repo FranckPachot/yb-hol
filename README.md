@@ -1,2 +1,12 @@
-# yb-hol
-Distributed SQL on containers: YugabyteDB (hands-on lab)
+# Next workshops:
+- PGConf India 2024 February 28 - 14:00 [Distributed SQL on containers: YugabyteDB hands-on lab](https://pgconf.in/conferences/pgconfin2024/program/proposals/685)
+
+Slides: [https://docs.google.com/presentation/d/1khHZpmP9Q-9Oy7pfD4_ww1Z93kjOQwgQsGhm2JRyBB8/edit?usp=sharing](http://hol.pachot.net)
+
+# Distributed SQL on containers: YugabyteDB hands-on lab
+
+Join us for a hands-on lab where we'll dive into Distributed SQL databases, focusing on YugabyteDB—an open-source and PostgreSQL-compatible solution. In this workshop, you'll have the opportunity to install YugabyteDB and test its key features, such as elasticity and resilience. We'll simulate scenarios like adding new containers and failures while running the SQL application.
+
+Throughout the session, we'll discuss the reasons behind using Distributed SQL and Cloud Native databases for modern applications. We'll cover important concepts like horizontal scalability, including sharding, replication, and distribution. We might also explore more details on YugabyteDB's architecture, including the Raft algorithm, LSM-Tree, and clock skew.
+
+To participate, you can simply attend and follow along with the demo on-screen. If you want to run the lab on your own, it's recommended to bring a laptop with Docker installed. However, if you're comfortable with alternative installation methods like VMs with Vagrant or Kubernetes, feel free to use them. For connectivity, we'll use any PostgreSQL client, with psql being the easiest option. If you're up for it, you can even try running your PostgreSQL application on YugabyteDB to see how it performs.

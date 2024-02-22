@@ -1,7 +1,13 @@
 tasks:
   - init: |
-      sudo apt-get update
+      # install PostgreSQL 16 client
+      sudo apt update
+      sudo apt install -y gnupg2 wget vim
+      sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+      curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/postgresql.gpg
+      sudo apt update -y
       sudo apt-get install -y postgresql-client
+      # pull all necessary images
       docker pull yugabytedb/yugabyte:latest
       docker pull postgres
       docker pull prom/prometheus:latest

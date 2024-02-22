@@ -12,8 +12,7 @@
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FranckPachot/yb-hol/)
 
-**If you are currently following the workshop, my ports are exposed to:**
-
+**If you are currently following the workshop, my ports are exposed to:** 
 [current-workshop-public-ports.md](current-workshop-public-ports.md)
 
 The commands to run are in the slide and in  [lab-commands.sh](lab-commands.sh)

@@ -1,0 +1,9 @@
+
+global:
+  scrape_interval: 5s
+scrape_configs:
+  - job_name: 'yugabytedb'
+    metrics_path: /prometheus-metrics
+    static_configs:
+      - targets: [ 'yb0.yb:7000', 'yb0.yb:9000', 'yb1.yb:7000', 'yb1.yb:9000', 'yb2.yb:7000', 'yb2.yb:9000', 'yb3.yb:9000', 'yb4.yb:9000', 'yb5.yb:9000' ]
+

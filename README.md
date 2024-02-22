@@ -1,7 +1,13 @@
 # Next workshops:
 - PGConf India 2024 February 28 - 14:00 [Distributed SQL on containers: YugabyteDB hands-on lab](https://pgconf.in/conferences/pgconfin2024/program/proposals/685)
 
-Slides: [https://docs.google.com/presentation/d/1khHZpmP9Q-9Oy7pfD4_ww1Z93kjOQwgQsGhm2JRyBB8/edit?usp=sharing](http://hol.pachot.net)
+**Slides for the workshop**: [http://hol.pachot.net](http://hol.pachot.net)
+
+**Commands to copy-paste**: [lab-commands.sh](lab-commands.sh)
+
+You can run it on Docker Desktop a free VM:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FranckPachot/yb-hol/)
 
 # Distributed SQL on containers: YugabyteDB hands-on lab
 

@@ -18,6 +18,14 @@
 
 The commands to run are in the slide and in  [lab-commands.sh](lab-commands.sh)
 
+The Docker images we will use (can be pulled before to avoid Wi-Fi issues)
+```
+docker pull yugabytedb/yugabyte:latest
+docker pull postgres
+docker pull prom/prometheus:latest
+docker pull grafana/grafana-oss
+```
+
 ---
 
 # Distributed SQL on containers: YugabyteDB hands-on lab

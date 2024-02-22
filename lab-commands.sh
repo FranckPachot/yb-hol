@@ -8,16 +8,15 @@ docker pull grafana/grafana-oss
 docker network create -d bridge yb
 
 mkdir yb-lab && cd yb-lab
-
 cat > Dockerfile <<'DOCKERFILE'
 FROM  yugabytedb/yugabyte:latest
 CMD  [ -f /root/var/conf/yugabyted.conf ] && flags="" ; rm -rf /tmp/.yb.* ; yugabyted start $flags --background=false --tserver_flags=yb_enable_read_committed_isolation=true 
 DOCKERFILE
 docker build -t yugabyted .
 
-#############   lab:   ##########
-[ ${1:=0} -lt    01    ] && exit
-#################################
+############################   lab:   ##########
+sh .ports.sh  ; [ ${1:=0} -lt    01    ] && exit
+################################################
 
 # Start yb0 (host yb0, zone A, PostgreSQL endpoint 5433)
 
@@ -37,8 +36,8 @@ docker run -d --name yb2 --hostname yb2 --network yb -p5435:5433 -p7002:7000 -p9
 
 until docker exec yb0 postgres/bin/pg_isready -h yb2.yb ; do sleep 1 ; done | uniq
 
-#############   lab:   ##########
-[ ${1:=0} -lt    02    ] && exit
-#################################
+############################   lab:   ##########
+sh .ports.sh  ; [ ${1:=0} -lt    02    ] && exit
+################################################
 
 

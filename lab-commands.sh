@@ -314,7 +314,27 @@ du -a
 cd /root/var/data/yb-data/tserver/data/rocksdb
 du -a
 
+###########################################   lab:   ##########
+sh .ports.sh  ; step="$1" ; [ ${step:=0} -lt    10    ] && exit
+###############################################################
 
+docker run -d -p 5432:5432 --name pg -e POSTGRES_PASSWORD=changeme --network yb postgres:14
+
+docker exec pg psql -c "select version()" -U postgres -c "create database pgbench"
+docker exec pg pgbench -i -s 10 -U postgres pgbench
+docker exec pg pgbench -T 10 -U postgres pgbench
+
+docker run -it --rm --network yb yugabytedb/yb-voyager bash
+
+yb-voyager export schema --export-dir=/tmp --source-db-type=postgresql --source-db-host=pg --source-db-user=postgres --source-db-password=changeme --source-db-name=pgbench --source-db-schema=public
+yb-voyager analyze-schema --export-dir=/tmp 
+cat /tmp/reports/schema_analysis_report.txt 
+
+yb-voyager export data --export-dir=/tmp --source-db-type=postgresql --source-db-host=pg --source-db-user=postgres --source-db-password=changeme --source-db-name=pgbench --source-db-schema=public
+
+-- create database mig on yugabytedb
+yb-voyager import schema --export-dir=/tmp --target-db-host=yb0 --target-db-user=yugabyte --target-db-password=yugabyte --target-db-name=mig --target-db-schema=public --start-clean=y
+yb-voyager import data --export-dir=/tmp --target-db-host=yb0 --target-db-user=yugabyte --target-db-password=yugabyte --target-db-name=mig 
 
 
 

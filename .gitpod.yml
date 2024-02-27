@@ -12,4 +12,6 @@ tasks:
       docker pull postgres
       docker pull prom/prometheus:latest
       docker pull grafana/grafana-oss
+      docker pull yugabytedb/yb-voyager
+
 

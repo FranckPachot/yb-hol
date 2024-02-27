@@ -203,8 +203,120 @@ docker run -d --name gr --network yb -p 3000:3000 grafana/grafana-oss
 sh .ports.sh  ; step="$1" ; [ ${step:=0} -lt    08    ] && exit
 ###############################################################
 
+-- check the primary key definition
+\d pgbench_accounts
+
+------------------ Point query with Hash sharding
+
+-- execution plan with read requests
+explain (analyze, dist, summary off)
+select * from pgbench_accounts where aid=42;
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+select * from pgbench_accounts where aid=42;
+
+--> 1 table read request, 1 seek, 2 next
+
+------------------ Range query with Range sharding
+
+-- create an ascending index on the account balance
+create index acc_bal on pgbench_accounts ( abalance asc )
+split at values ( (-4000),(-1000),(0),(1000),(4000) );
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+select abalance from pgbench_accounts
+where abalance >0
+order by abalance fetch first 1000 rows only;
+
+--> 1 index read request, 1 seek, 1000 next
+
+------------------ Range query with Range sharding + Table access
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+select * from pgbench_accounts
+where abalance >0
+order by abalance fetch first 1000 rows only;
+
+--> 1 index read request, 1 seek, 1000 next
+--> 1 table read request, 1000 seek, 4000 next
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+select * from pgbench_accounts where abalance >0;
+
+--> 1 read request per yb_fetch_row_limit=1024
+
+------------------ Pushdowns
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+select count(*) from pgbench_accounts where abalance >0;
+
+--> 1 read request (Partial Aggregate)
+
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+select distinct abalance from pgbench_accounts;
+
+--> 1 read request (Partial Aggregate)
+
+------------------ Batched Nested Loop
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+/*+ Set(yb_bnl_batch_size 1024 )*/
+select count(aid) from pgbench_history
+join pgbench_accounts using(aid) where delta>0;
+
+--> 1 loop per 1024 rows (yb_bnl_batch_size)
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+/*+ Set(yb_bnl_batch_size 1024 )*/
+select count(aid) from pgbench_history
+join pgbench_accounts using(aid) where delta>0;
+
+--> 1 loop per 1024 rows (yb_bnl_batch_size)
+
+------------------ Writes (batched and flushed)
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary off)
+update pgbench_accounts set abalance=0
+ where aid in (10,20,30,40,50);
+
+--> 1 table read request (loose index scan)
+--> 5 table table write request (rows in primary index)
+--> 10 index write request (secondary indexes delete+insert)
+
+-- execution plan with read requests and storage metrics
+explain (analyze, dist, debug, costs off, summary on)
+insert into pgbench_accounts select generate_series(1000000000,1000009999),1,0,'';
+
+--> 6 flush request (writes are batched)
+
 ###########################################   lab:   ##########
 sh .ports.sh  ; step="$1" ; [ ${step:=0} -lt    09    ] && exit
 ###############################################################
+
+# Look at the processes running
+sh-4.4# ps -Heo pid,ppid,args | sort -n | cut -c1-120
+
+# WALs per tablet
+cd /root/var/data/yb-data/tserver/wals
+du -a
+
+# RocksDB regular and intents
+cd /root/var/data/yb-data/tserver/data/rocksdb
+du -a
+
+
+
+
+
 
 

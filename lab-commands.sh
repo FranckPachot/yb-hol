@@ -109,6 +109,8 @@ sh .ports.sh  ; step="$1" ; [ ${step:=0} -lt    04    ] && exit
  
 docker pause yb2 
 
+# or docker stop yb2, or docker network yb disconnect yb yb2
+
 sleep 3
 
 # restart the container

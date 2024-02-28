@@ -5,7 +5,7 @@
 
 ## Current workshop:
 
-**Slides for the workshop**: [http://hol.pachot.net](http://hol.pachot.net)
+**Slides for the workshop**: http://tinyurl.com/tczm9un3 
 
 
 **You can run it on Docker Desktop, or a free Gitpod VM (with github account)**:
